@@ -11,6 +11,7 @@
     <main>
       <h1>Tic Tac Toe</h1>
       <h2><span class="turn">Player</span>'s turn</h2>
+      <h3><span class="winner">winner</span>Won!</h3>
       <div class="board">
         <div id="row-1">
           <div class="column-1 cell" id="cell-1"></div>
@@ -28,7 +29,17 @@
           <div class="column-3 cell" id="cell-9"></div>
         </div>
       </div>
+      <div class="message hide">
+        <p>This cell is already occupied. Please select another cell.</p>
+      </div>
+      <div class="btn-container">
+        <button class="reset-btn">reset</button>
+      </div>
     </main>
     <script src="./index.js"></script>
+    <script
+      src="https://kit.fontawesome.com/e423f6e047.js"
+      crossorigin="anonymous"
+    ></script>
   </body>
 </html>
