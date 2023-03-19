@@ -1,34 +1,90 @@
+const resetBtn = document.querySelector(".reset-btn");
+const h2 = document.querySelector("h2");
+const displayTurnSpan = h2.querySelector(".turn");
+
 const PLAYER = { name: "player", mark: "O" };
 const COMP = { name: "computer", mark: "X" };
-const cellIdPrefix = "cell-";
+const board = {
+  cells: [
+    "cell-1",
+    "cell-2",
+    "cell-3",
+    "cell-4",
+    "cell-5",
+    "cell-6",
+    "cell-7",
+    "cell-8",
+    "cell-9",
+  ],
+  cellIdPrefix: "cell-",
+  display: document.querySelector(".board"),
+  emptyCell: [
+    "cell-1",
+    "cell-2",
+    "cell-3",
+    "cell-4",
+    "cell-5",
+    "cell-6",
+    "cell-7",
+    "cell-8",
+    "cell-9",
+  ],
+  resetBoard: function () {
+    this.emptyCell = [];
+    this.cells.forEach((cell) => {
+      this.emptyCell.push(cell);
+    });
+    console.log("emptycells:::::::::::::");
+    console.log(`cells:${this.emptyCell}`);
+    const cells = document.getElementsByClassName("cell");
 
-const diagnols = {
-  diagnol1: ["cell-1", "cell-5", "cell-9"],
-  diagnol2: ["cell-3", "cell-5", "cell-7"],
+    Array.from(cells).forEach((cell) => {
+      if (cell.innerText) {
+        cell.innerText = "";
+      }
+    });
+  },
+  diagnols: [
+    ["cell-1", "cell-5", "cell-9"],
+    ["cell-3", "cell-5", "cell-7"],
+  ],
+  markCell: function (markedCell, mark) {
+    markedCell.textContent = mark;
+    const index = this.emptyCell.indexOf(markedCell.id);
+    if (index > -1) {
+      // only splice array when item is found
+      this.emptyCell.splice(index, 1); // 2nd parameter means remove one item only
+    }
+  },
+  getRandomCellId: function () {
+    const randomIndex = Math.floor(Math.random() * this.emptyCell.length);
+
+    const cellId = this.emptyCell[randomIndex];
+    return cellId;
+  },
+  getRandomCell: function () {
+    const randomCellId = this.getRandomCellId();
+    const computerMove = document.getElementById(`${randomCellId}`);
+    return computerMove;
+  },
 };
 
+let compTimeoutId;
+
 //1:occupied 0:not occupied
-let isPlaying = true;
-
-const board = document.querySelector(".board");
-
-board.addEventListener("click", onClickCell);
-
+let isPlaying = false;
+let turn = PLAYER.name;
+function areCellsEqual(...cells) {
+  const firstCell = cells[0];
+  return cells.every((cell) => cell.textContent === firstCell.textContent);
+}
 function checkForSameMarksInRow(parentCell) {
   const cellsOfRow = parentCell.children;
-  console.log(cellsOfRow);
-  console.log(cellsOfRow[0].textContent);
-  console.log(cellsOfRow[1].textContent);
-  console.log(cellsOfRow[2].textContent);
 
-  if (
-    cellsOfRow[0].textContent === cellsOfRow[1].textContent &&
-    cellsOfRow[1].textContent === cellsOfRow[2].textContent
-  ) {
-    console.log("row is same");
+  if (areCellsEqual(...cellsOfRow)) {
     return true;
   }
-  console.log("row is not same");
+
   return false;
 }
 function checkForSameMarksInColumn(cell) {
@@ -36,10 +92,7 @@ function checkForSameMarksInColumn(cell) {
   console.log(cell);
   const columnOfCell = cell.classList[0];
   const cellsOfColumn = document.querySelectorAll(`.${columnOfCell}`);
-  if (
-    cellsOfColumn[0].textContent === cellsOfColumn[1].textContent &&
-    cellsOfColumn[1].textContent === cellsOfColumn[2].textContent
-  ) {
+  if (areCellsEqual(...cellsOfColumn)) {
     console.log("column is same");
     return true;
   }
@@ -60,23 +113,58 @@ function checkForSameMarksIndiagonal(diagnol) {
   console.log("diagnol is not same");
   return false;
 }
-function markCell(markedCell, mark) {
-  markedCell.textContent = mark;
-}
 function checkForWin(cell, rowContainer) {
-  let ifWon = false;
-  if (checkForSameMarksInRow(rowContainer) || checkForSameMarksInColumn(cell)) {
-    ifWon = true;
-  } else if (cell.id === "#cell-5" || diagnols.diagnol1.includes(cell.id)) {
-    ifWon = checkForSameMarksIndiagonal(diagnols.diagnol1);
-  } else if (cell.id === "#cell-5" || diagnols.diagnol2.includes(cell.id)) {
-    ifWon = checkForSameMarksIndiagonal(diagnols.diagnol2);
-  } else {
-    ifWon = false;
+  const cellId = cell.id;
+  if (
+    checkForSameMarksInRow(rowContainer) ||
+    checkForSameMarksInColumn(cell) ||
+    board.diagnols.some(
+      (diagnol) =>
+        diagnol.includes(cellId) && checkForSameMarksIndiagonal(diagnol)
+    )
+  ) {
+    return true;
   }
-  return ifWon;
+  return false;
+}
+function displayWinner(winner) {
+  h2.innerText = `${winner} won!`;
+}
+function displayTurn(turn) {
+  displayTurnSpan.innerText = turn;
+}
+function changeTurn() {
+  if (turn === PLAYER.name) {
+    board.display.addEventListener("click", onClickCell);
+  } else if (turn === COMP.name) {
+    board.display.removeEventListener("click", onClickCell);
+    clearTimeout(compTimeoutId);
+    compTimeoutId = setTimeout(computerTurn, 1000);
+  }
+
+  displayTurn(turn);
+}
+function handleturnResult(ifWon) {
+  if (ifWon) {
+    isPlaying = false;
+    displayWinner(turn);
+    changeResetBtnText();
+    turn === PLAYER.name &&
+      board.display.removeEventListener("click", onClickCell);
+    return;
+  }
+  const isDrawState = isDraw();
+  if (isDrawState) {
+    changeResetBtnText();
+    turn === PLAYER.name &&
+      board.display.removeEventListener("click", onClickCell);
+  } else {
+    turn = turn === PLAYER.name ? COMP.name : PLAYER.name;
+    changeTurn();
+  }
 }
 function onClickCell(event) {
+  console.log("clicked!!!!!!!");
   const cellClicked = event.target;
   const rowContainer = event.target.parentNode;
   if (!event.target.classList.contains("cell")) {
@@ -87,11 +175,49 @@ function onClickCell(event) {
     return;
   }
 
-  markCell(cellClicked, PLAYER.mark);
+  board.markCell(cellClicked, PLAYER.mark);
   const ifWon = checkForWin(cellClicked, rowContainer);
-  if (ifWon) {
+  handleturnResult(ifWon);
+}
+
+function computerTurn() {
+  let computerMove = board.getRandomCell();
+  console.log(computerMove);
+  board.markCell(computerMove, COMP.mark);
+  const rowContainer = computerMove.parentNode;
+
+  const ifWon = checkForWin(computerMove, rowContainer);
+  handleturnResult(ifWon);
+}
+function isDraw() {
+  if (board.emptyCell.length === 0) {
     isPlaying = false;
-    document.querySelector("h1").innerText = "won!";
-    return;
+    h2.textContent = "DRAW!";
+    return true;
+  } else {
+    return false;
   }
 }
+function changeResetBtnText() {
+  resetBtn.innerText = "play again";
+}
+function resetGame() {
+  if (compTimeoutId) {
+    clearTimeout(compTimeoutId);
+  }
+  board.resetBoard();
+
+  if (turn === COMP.name) {
+    turn = PLAYER.name;
+  }
+
+  playGame();
+}
+
+function playGame() {
+  isPlaying = true;
+  cellsOccupyState = 0;
+  resetBtn.addEventListener("click", resetGame);
+  board.display.addEventListener("click", onClickCell);
+}
+playGame();
