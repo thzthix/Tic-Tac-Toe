@@ -43,7 +43,8 @@ A simple Tic Tac Toe game played with a computer player. Implemented by HTML,CSS
 - CSS custom properties
 - Flexbox
 - CSS Grid
--Vanila JS
+- Vanila JS
+
 
 
 
