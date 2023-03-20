@@ -5,7 +5,7 @@
 ## Table of contents
 
 - [Overview](#overview)
-  - [descriptions](#the-challenge)
+  - [descriptions](#descriptions)
   - [Screenshot](#screenshot)
   - [Executing Program](#executing-program)
 - [My process](#my-process)
@@ -20,24 +20,15 @@
 
 ## Overview
 
-### The challenge
+### descriptions
 
-Users should be able to:
+A simple Tic Tac Toe game played with a computer player. Implemented by HTML,CSS Javascript.
 
-- View the optimal layout depending on their device's screen size
-- See hover states for interactive elements
 
 ### Screenshot
 ![Animation](https://user-images.githubusercontent.com/95135403/226419597-4a6f7662-1054-4d60-afe1-88b69b78c230.gif)
-![](./screenshot.jpg)
 
-Add a screenshot of your solution. The easiest way to do this is to use Firefox to view your project, right-click the page and select "Take a Screenshot". You can choose either a full-height screenshot or a cropped one based on how long the page is. If it's very long, it might be best to crop it.
 
-Alternatively, you can use a tool like [FireShot](https://getfireshot.com/) to take the screenshot. FireShot has a free option, so you don't need to purchase it. 
-
-Then crop/optimize/edit your image however you like, add it to your project, and update the file path in the image above.
-
-**Note: Delete this note and the paragraphs above when you add your screenshot. If you prefer not to add a screenshot, feel free to remove this entire section.**
 
 ### Executing Program
 
@@ -52,12 +43,9 @@ Then crop/optimize/edit your image however you like, add it to your project, and
 - CSS custom properties
 - Flexbox
 - CSS Grid
-- Mobile-first workflow
-- [React](https://reactjs.org/) - JS library
-- [Next.js](https://nextjs.org/) - React framework
-- [Styled Components](https://styled-components.com/) - For styles
+-Vanila JS
 
-**Note: These are just examples. Delete this note and replace the list above with your own choices**
+
 
 ### What I learned
 
