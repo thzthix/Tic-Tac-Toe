@@ -32,8 +32,8 @@ A simple Tic Tac Toe game played with a computer player. Implemented by HTML,CSS
 
 ### Executing Program
 
-- Solution URL: [Add solution URL here](https://your-solution-url.com)
-- Live Site URL: [Add live site URL here](https://your-live-site-url.com)
+
+- Live Site URL: https://thzthix.github.io/Tic-Tac-Toe/
 
 ## My process
 
