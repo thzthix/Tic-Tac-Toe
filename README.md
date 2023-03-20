@@ -22,7 +22,7 @@
 
 ### descriptions
 
-A simple Tic Tac Toe game played with a computer player. Implemented by HTML,CSS Javascript.
+A simple Tic Tac Toe game played with a computer player.
 
 
 ### Screenshot
