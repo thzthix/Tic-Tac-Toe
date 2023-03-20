@@ -252,6 +252,7 @@ function resetGame() {
   if (turn === COMP.name) {
     turn = PLAYER.name;
   }
+  displayTurn(turn);
   if (!occupiedMessage.classList.contains("hide")) {
     occupiedMessage.classList.add("hide");
   }
@@ -272,3 +273,4 @@ function playGame() {
   board.display.addEventListener("click", onClickCell);
 }
 playGame();
+
