@@ -10,8 +10,15 @@
   <body>
     <main>
       <h1>Tic Tac Toe</h1>
-      <h2><span class="turn">Player</span>'s turn</h2>
-      <h3><span class="winner">winner</span>Won!</h3>
+      <div class="message-container">
+        <p class="message-turn"><span class="turn">Player</span>'s turn</p>
+        <p class="message-occupied hide">
+          This cell is already occupied. Please select another cell.
+        </p>
+
+        <p class="message-won hide"><span class="winner">winner</span> Won!</p>
+        <p class="message-draw hide">Draw!</p>
+      </div>
       <div class="board">
         <div id="row-1">
           <div class="column-1 cell" id="cell-1"></div>
@@ -29,9 +36,7 @@
           <div class="column-3 cell" id="cell-9"></div>
         </div>
       </div>
-      <div class="message hide">
-        <p>This cell is already occupied. Please select another cell.</p>
-      </div>
+
       <div class="btn-container">
         <button class="reset-btn">reset</button>
       </div>
