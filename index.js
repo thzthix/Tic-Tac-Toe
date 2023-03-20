@@ -253,7 +253,7 @@ function resetGame() {
     turn = PLAYER.name;
   }
   if (!occupiedMessage.classList.contains("hide")) {
-    occupiedMessage.classList.add(hide);
+    occupiedMessage.classList.add("hide");
   }
   if (!wonMessage.classList.contains("hide")) {
     wonMessage.classList.add("hide");
