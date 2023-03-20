@@ -26,7 +26,7 @@ A simple Tic Tac Toe game played with a computer player. Implemented by HTML,CSS
 
 
 ### Screenshot
-![Animation](https://user-images.githubusercontent.com/95135403/226419597-4a6f7662-1054-4d60-afe1-88b69b78c230.gif)
+![Animation2](https://user-images.githubusercontent.com/95135403/226422983-ca9a347b-2729-404c-8cf5-ec5888b82082.gif)
 
 
 
